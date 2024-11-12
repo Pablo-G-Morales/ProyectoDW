@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" type="image/x-icon" href="https://cdn.icon-icons.com/icons2/272/PNG/512/Camera_30015.png">
+    <!-- Definición del tipo de documento como HTML5 -->
+    <meta charset="UTF-8">
+    <!-- Configuración de la codificación de caracteres en UTF-8 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Título de la página que se mostrará en la pestaña del navegador -->
+    <title>Subir imagen</title>
+    <link rel="icon" type="image/x-icon" href="https://cdn.icon-icons.com/icons2/272/PNG/512/Camera_30015.png">
+    <%- include("partials/head") %>
+    <!-- Integración de Bootstrap 4 desde un CDN para usar estilos predeterminados y responsivos -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/css/bootstrap.min.css" 
+    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+</head>
+<body>
+
+    <%- include("partials/navigation")%>
+
+    <!-- Contenedor con padding de 4 (p-4) para organizar el contenido -->
+    <div class="container p-4">
+        <div class="row">
+            <!-- Columna centrada con un desplazamiento (offset-md-4) y un ancho de 4/12 (col-md-4) -->
+            <div class="col-md-4 offset-md-4">
+                <!-- Tarjeta de Bootstrap para organizar el contenido -->
+                <div class="card">
+                    <div class="card-body">
+                        <!-- Formulario para subir una imagen con método POST y codificación multipart para archivos -->
+                        <form action="/upload" method="post" enctype="multipart/form-data">
+
+                            <!-- Grupo de entrada con margen inferior (mb-3) para subir el archivo -->
+                            <div class="input-group mb-3">
+                                <div class="custom-file">
+                                  <!-- Input para seleccionar el archivo a subir -->
+                                  <input type="file" name="image" class="custom-file-input" id="inputGroupFile02">
+                                  <!-- Etiqueta que muestra "Choose file" hasta que se selecciona un archivo -->
+                                  <label class="custom-file-label" for="inputGroupFile02" aria-describedby="inputGroupFileAddon02">Choose file</label>
+                                </div>
+                            </div>
+
+                            <!-- Campo de texto para ingresar un título -->
+                            <div class="form-group">
+                                <input type="text" name="title" placeholder="Title" class="form-control">
+                            </div>
+                            
+                            <!-- Área de texto para ingresar una descripción de la imagen -->
+                            <div class="form-group">
+                                <textarea name="description" class="form-control" placeholder="Description"></textarea>
+                            </div>
+
+                            <!-- Botón para enviar el formulario y subir la imagen -->
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success btn-block">
+                                    Subir
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

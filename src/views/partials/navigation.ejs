@@ -1,0 +1,25 @@
+<!-- views/partials/navigation.ejs -->
+<nav class="navbar navbar-expand navbar-dark bg-success w-100">
+    <a class="navbar-brand d-flex align-items-center" href="/">
+        <img src="https://cdn.icon-icons.com/icons2/272/PNG/512/Camera_30015.png" 
+             alt="Favicon" 
+             width="30" 
+             height="30" 
+             class="d-inline-block align-top mr-2">
+        Pick-Card
+    </a>
+    
+    <div class="navbar-nav ml-auto d-flex align-items-center">
+        <% if (!user) { %>
+            <!-- Opciones para usuarios no autenticados -->
+            <a class="nav-link" href="/users/login">Iniciar Sesión</a>
+            <a class="nav-link" href="/users/register">Registrarse</a>
+        <% } else { %>
+            <!-- Opciones para usuarios autenticados -->
+            <a class="nav-link" href="/upload">Subir Imagen</a>
+            <span class="nav-link">Bienvenido, <%= user.username %></span>
+            <a class="nav-link" href="/users/profile">Mi Perfil</a>
+            <a class="nav-link" href="/users/logout">Cerrar Sesión</a>
+        <% } %>
+    </div>
+</nav>

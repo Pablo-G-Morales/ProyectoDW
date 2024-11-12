@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de Imagen</title>
+    <link rel="icon" type="image/x-icon" href="https://cdn.icon-icons.com/icons2/272/PNG/512/Camera_30015.png">
+    <%- include("partials/head") %>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/css/bootstrap.min.css" 
+    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" 
+    integrity="sha512-c42qTSw/wPZ3/5LBzD+Bw5f7bSF2oxou6wEb+I/lqeaKV5FDIfMvvRp772y4jcJLKuGUOpbJMdg/BTl50fJYAw==" 
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        /* Estilos de los filtros */
+        .filter-original { filter: none; }
+        .filter-grayscale { filter: grayscale(100%); }
+        .filter-sepia { filter: sepia(100%); }
+        .filter-invert { filter: invert(100%); }
+        .filter-brightness { filter: brightness(1.5); }
+        .filter-contrast { filter: contrast(2); }
+    </style>
+</head>
+<body>
+    <%- include("partials/navigation") %>
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card animated fadeInDown shadow">
+                    <!-- Imagen con filtros aplicables -->
+                    <img id="image" src="<%= image.path %>" class="card-img-top filter-original" alt="<%= image.title %>">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= image.title %></h5>
+                        <p class="card-text"><%= image.description %></p>
+                        <p class="card-text"><small class="text-muted">Publicado hace <%= format(image.created_at) %></small></p>
+
+                        <!-- Botones de Filtro -->
+                        <div class="btn-group" role="group" aria-label="Filtros de imagen">
+                            <button class="btn btn-secondary" onclick="applyFilter('original')">Original</button>
+                            <button class="btn btn-secondary" onclick="applyFilter('grayscale')">Blanco y Negro</button>
+                            <button class="btn btn-secondary" onclick="applyFilter('sepia')">Sepia</button>
+                            <button class="btn btn-secondary" onclick="applyFilter('invert')">Invertir Colores</button>
+                            <button class="btn btn-secondary" onclick="applyFilter('brightness')">Brillo</button>
+                            <button class="btn btn-secondary" onclick="applyFilter('contrast')">Contraste</button>
+                        </div>
+
+                        <!-- Botón para Descargar la Imagen -->
+                        <button class="btn btn-primary btn-block mt-3" onclick="downloadImage()">Descargar Imagen</button>
+
+                        <!-- Botones de Editar y Eliminar -->
+                        <a href="/image/<%= image._id %>/edit" class="btn btn-warning btn-block mt-3">Editar Imagen</a>
+                        <a href="/image/<%= image._id %>/delete" class="btn btn-danger btn-block">Eliminar Imagen</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Script para manejar los filtros y la descarga -->
+    <script>
+        function applyFilter(filter) {
+            const image = document.getElementById('image');
+            image.className = 'card-img-top'; // Restablecer clases
+            switch (filter) {
+                case 'original':
+                    image.classList.add('filter-original');
+                    break;
+                case 'grayscale':
+                    image.classList.add('filter-grayscale');
+                    break;
+                case 'sepia':
+                    image.classList.add('filter-sepia');
+                    break;
+                case 'invert':
+                    image.classList.add('filter-invert');
+                    break;
+                case 'brightness':
+                    image.classList.add('filter-brightness');
+                    break;
+                case 'contrast':
+                    image.classList.add('filter-contrast');
+                    break;
+            }
+        }
+
+        function downloadImage() {
+            const image = document.getElementById('image');
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.width = image.width;
+            canvas.height = image.height;
+
+            // Aplicar el filtro actual al contexto del canvas
+            const filter = window.getComputedStyle(image).filter;
+            context.filter = filter;
+
+            // Dibujar la imagen en el canvas
+            context.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+            // Convertir el canvas a una imagen descargable
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL('image/jpeg');
+            link.download = 'imagen_filtrada.jpg';
+            link.click();
+        }
+    </script>
+</body>
+</html>

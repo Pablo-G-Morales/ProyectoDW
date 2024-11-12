@@ -1,0 +1,19 @@
+<!-- views/profile.ejs -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <link rel="icon" type="image/x-icon" href="https://cdn.icon-icons.com/icons2/272/PNG/512/Camera_30015.png">
+  <%- include("partials/head") %>
+  <title>Perfil de Usuario</title>
+</head>
+<body>
+  <%- include("partials/navigation") %>
+  <div class="container mt-5">
+    <h1>Perfil de <%= user.username %></h1>
+    <p><strong>Correo Electrónico:</strong> <%= user.email %></p>
+    
+    <!-- Opcional: Botón para cerrar sesión -->
+    <a href="/users/logout" class="btn btn-secondary mt-3">Cerrar Sesión</a>
+  </div>
+</body>
+</html>
